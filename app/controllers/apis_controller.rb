@@ -1,4 +1,6 @@
 class ApisController < ApplicationController
+  before_action :authenticate_me
+
   def index
     @apis = Api.all
   end
@@ -45,6 +47,12 @@ class ApisController < ApplicationController
   private
     def api_params
       params.require(:api).permit(:name, :api_type, :api_key, :secret_key)
+    end
+
+    def authenticate_me
+      if not current_user
+        redirect_to user_google_oauth2_omniauth_authorize_path
+      end
     end
 
 end

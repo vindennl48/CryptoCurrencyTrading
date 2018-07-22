@@ -1,5 +1,6 @@
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_me
 
   # GET /transactions
   # GET /transactions.json
@@ -71,4 +72,11 @@ class TransactionsController < ApplicationController
     def transaction_params
       params.require(:transaction).permit(:date, :amount)
     end
+
+    def authenticate_me
+      if not current_user
+        redirect_to user_google_oauth2_omniauth_authorize_path
+      end
+    end
+
 end
