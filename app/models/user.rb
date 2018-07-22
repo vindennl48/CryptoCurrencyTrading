@@ -10,7 +10,6 @@ class User < ApplicationRecord
     end
   end
 
-
   # ORIGINAL CODE
   ## Include default devise modules. Others available are:
   ## :confirmable, :lockable, :timeoutable and :omniauthable

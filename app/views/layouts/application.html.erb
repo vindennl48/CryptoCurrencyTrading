@@ -10,6 +10,13 @@
   </head>
 
   <body>
+    <% if @debug %>
+      <p>
+        <strong>Debug: </strong>
+        |<%= @debug %>|
+      </p>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
