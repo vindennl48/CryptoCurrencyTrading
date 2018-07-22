@@ -6,9 +6,13 @@ ruby '2.5.1'
 gem 'binance'
 gem 'coinbase'
 gem 'coinbase-exchange'
+
 gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'google-api-client'
+
+gem 'bootstrap'
+gem 'jquery-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
