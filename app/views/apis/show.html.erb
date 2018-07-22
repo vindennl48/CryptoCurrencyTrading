@@ -1,0 +1,21 @@
+<h1>Show API</h1>
+<table>
+  <tr>
+    <th>Name</th>
+    <td><%= @api.name %></td>
+  </tr>
+  <tr>
+    <th>Api Type</th>
+    <td><%= @api.api_type %></td>
+  </tr>
+  <tr>
+    <th>Api Key</th>
+    <td><%= @api.api_key %></td>
+  </tr>
+  <tr>
+    <th>Secret Key</th>
+    <td>****</td>
+  </tr>
+</table>
+
+<%= link_to 'Back', apis_path %>

@@ -1,0 +1,53 @@
+<h1>Dasboard</h1>
+
+<table>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <td><strong>Amount Invested: </strong></td>
+          <td><%= "$#{'%.2f' % @investment}" %></td>
+        </tr>
+        <tr>
+          <td><strong>Profit: </strong></td>
+          <td><%= "$#{'%.2f' % (@assets["total"]-@investment)}" %></td>
+        </tr>
+        <tr></tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <th>Coin</th>
+          <th>Ticker</th>
+          <th>Assets</th>
+          <th>Balance</th>
+        </tr>
+
+        <% @symbols.each do |key, symbol| %>
+          <% asset = @assets[symbol["baseAsset"]] %>
+          <% if asset["usd"].to_f > 5.0  %>
+            <tr>
+              <td><%= symbol["baseAsset"] %></td>
+              <td><%= symbol["price"] %></td>
+              <td><%= asset["amount"] %></td>
+              <td><%= "$#{asset["usd"]}" %></td>
+            </tr>
+          <% end %>
+        <% end %>
+
+        <tr>
+          <td></td>
+          <td></td>
+          <td><strong>Total:</strong></td>
+          <td><%= "$#{'%.2f' % @assets["total"]}" %></td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+
+</table>
