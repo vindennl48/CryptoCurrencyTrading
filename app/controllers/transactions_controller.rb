@@ -11,7 +11,7 @@ class TransactionsController < ApplicationController
 
   def new
     @transaction = Transaction.new
-    @api.user_id = current_user.id
+    @transaction.user_id = current_user.id
   end
 
   def edit
@@ -19,7 +19,7 @@ class TransactionsController < ApplicationController
 
   def create
     @transaction = Transaction.new(transaction_params)
-    @api.user_id = current_user.id
+    @transaction.user_id = current_user.id
 
     respond_to do |format|
       if @transaction.save
