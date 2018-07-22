@@ -1,72 +1,116 @@
-<p id="notice"><%= notice %></p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 ">
+  <a class="navbar-brand" href="#">Crypto Currency Trading</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-<h1>Dashboard</h1>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'API\'s ', apis_path, :class => "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Investments ', transactions_path, :class => "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Log Out ', destroy_user_session_path, method: :delete, data: { confirm: "Are you sure you want to log out?" }, :class => "nav-link" %>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-<table>
-  <tr>
-    <td>
-      <%= link_to 'Api\'s', apis_path %> |
-      <%= link_to 'Investments', transactions_path %> |
-      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { confirm: "Are you sure you want to sign out?" }  %>
-    </td>
-  </tr>
-</table>
+<div class=" container ">
 
-<table>
-  <tr>
-    <td>
-      <table>
+  <div class=" row ">
+    <div class=" col ">
+      <h1>Dashboard</h1>
+      <hr></hr>
+    </div>
+  </div>
+
+  <div class=" row ">
+    <div class=" col ">
+      <% if notice %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Ohhh Shit! </strong> <%= notice %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class=" row ">
+    <div class=" col ">
+      <div class=" row ">
+        <div class=" col ">
+          <h2>Summary</h2>
+        </div>
+      </div>
+      <div class=" row ">
+        <div class=" col-6 col-md-3 ">
+          <strong>Amount Invested: </strong>
+        </div>
+        <div class=" col-6 col-md-2 text-right ">
+          <%= "$#{'%.2f' % @investment}" %>
+        </div>
+      </div>
+      <div class=" row ">
+        <div class=" col-6 col-md-3 ">
+          <strong>Current Total: </strong>
+        </div>
+        <div class=" col-6 col-md-2 text-right ">
+          <%= "$#{'%.2f' % @assets["total"]}" %>
+        </div>
+      </div>
+      <div class=" row ">
+        <div class=" col-6 col-md-3 ">
+          <strong>Profit: </strong>
+        </div>
+        <div class=" col-6 col-md-2 text-right ">
+          <% profit = @assets["total"]-@investment %>
+          <% if profit >= 0 %>
+            <%= "$#{'%.2f' % profit}" %>
+          <% else %>
+            <%= "-$#{'%.2f' % (profit*-1)}" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class=" row mt-3 ">
+    <div class=" col ">
+      <h2>Current Investments</h2>
+    </div>
+  </div>
+
+  <div class=" row ">
+    <div class=" col ">
+      <table class=" table ">
         <tr>
-          <td><strong>Amount Invested: </strong></td>
-          <td><%= "$#{'%.2f' % @investment}" %></td>
-        </tr>
-        <tr>
-          <td><strong>Profit: </strong></td>
-          <td>
-            <% profit = @assets["total"]-@investment %>
-            <% if profit >= 0 %>
-              <%= "$#{'%.2f' % profit}" %>
-            <% else %>
-              <%= "-$#{'%.2f' % (profit*-1)}" %>
-            <% end %>
-          </td>
-        </tr>
-        <tr></tr>
-      </table>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <table>
-        <tr>
-          <th>Coin</th>
-          <th>Ticker</th>
-          <th>Assets</th>
-          <th>Balance</th>
+          <th class=" text-center ">Coin</th>
+          <th class=" text-center ">Ticker</th>
+          <th class=" text-center ">Assets</th>
+          <th class=" text-center ">Balance</th>
         </tr>
 
         <% @symbols.each do |key, symbol| %>
           <% asset = @assets[symbol["baseAsset"]] %>
           <% if asset["usd"].to_f > 5.0  %>
             <tr>
-              <td><%= symbol["baseAsset"] %></td>
-              <td><%= "#{'%.8f' % symbol["price"]}" %></td>
-              <td><%= "#{'%.8f' % asset["amount"]}" %></td>
-              <td><%= "$#{'%.2f' % asset["usd"]}" %></td>
+              <td class=" text-center "><%= symbol["baseAsset"] %></td>
+              <td class=" text-right "><%= "#{'%.8f' % symbol["price"]}" %></td>
+              <td class=" text-right "><%= "#{'%.8f' % asset["amount"]}" %></td>
+              <td class=" text-right "><%= "$#{'%.2f' % asset["usd"]}" %></td>
             </tr>
           <% end %>
         <% end %>
-
-        <tr>
-          <td></td>
-          <td></td>
-          <td><strong>Total:</strong></td>
-          <td><%= "$#{'%.2f' % @assets["total"]}" %></td>
-        </tr>
-
       </table>
-    </td>
-  </tr>
-
-</table>
+    </div>
+  </div>
+</div>

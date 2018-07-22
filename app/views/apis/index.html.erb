@@ -1,35 +1,94 @@
-<h1>Listing API's</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 ">
+  <a class="navbar-brand" href="#">Crypto Currency Trading</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-<table>
-  <tr>
-    <td>
-      <%= link_to 'Dashboard', root_path %> |
-      <%= link_to 'Investments', transactions_path %> |
-      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { confirm: "Are you sure you want to sign out?" }  %>
-    </td>
-  </tr>
-</table>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <%= link_to 'Dashboard ', root_path, :class => "nav-link" %>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">API's <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Investments ', transactions_path, :class => "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Log Out ', destroy_user_session_path, method: :delete, data: { confirm: "Are you sure you want to log out?" }, :class => "nav-link" %>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Api Key</th>
-    <th>Secret Key</th>
-  </tr>
+<div class=" container ">
 
-  <% @apis.each do |api| %>
-    <tr>
-      <td><%= api.name %></td>
-      <td><%= api.api_key.truncate(20) %></td>
-      <td>****</td>
-      <td><%= link_to 'Show', api_path(api) %></td>
-      <td><%= link_to 'Edit', edit_api_path(api) %></td>
-      <td><%= link_to 'Delete', api_path(api),
-              method: :delete,
-              data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
-  <tr>
-    <td><%= link_to 'New API', new_api_path %></td>
-  </tr>
-</table>
+  <div class=" row ">
+    <div class=" col ">
+      <h1>API's</h1>
+    </div>
+  </div>
+
+  <div class=" row ">
+    <div class=" col d-sm-none ">
+      <table class=" table text-center ">
+        <tr>
+          <th>Name</th>
+          <th width="40%"></th>
+        </tr>
+
+        <% @apis.each do |api| %>
+          <tr>
+            <td><%= api.name %></td>
+            <td>
+              <%= link_to 'Show', api_path(api) %>, 
+              <%= link_to 'Edit', edit_api_path(api) %>, 
+              <%= link_to 'Delete', api_path(api),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <td></td>
+          <td><%= link_to '+ New API', new_api_path, :class => "btn btn-primary" %></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class=" col d-none d-sm-block ">
+      <table class=" table text-center ">
+        <tr>
+          <th>Name</th>
+          <th>Api Key</th>
+          <th>Secret Key</th>
+          <th width=35%"></th>
+        </tr>
+
+        <% @apis.each do |api| %>
+          <tr>
+            <td><%= api.name %></td>
+            <td><%= api.api_key.truncate(20) %></td>
+            <td>****</td>
+            <td>
+              <%= link_to 'Show', api_path(api) %>, 
+              <%= link_to 'Edit', edit_api_path(api) %>, 
+              <%= link_to 'Delete', api_path(api),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= link_to '+ New API', new_api_path, :class => "btn btn-primary" %></td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+

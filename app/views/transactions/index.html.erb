@@ -1,38 +1,70 @@
-<p id="notice"><%= notice %></p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 ">
+  <a class="navbar-brand" href="#">Crypto Currency Trading</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-<h1>Transactions</h1>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <%= link_to 'Dashboard ', root_path, :class => "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'API\'s ', apis_path, :class => "nav-link" %>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Investments <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Log Out ', destroy_user_session_path, method: :delete, data: { confirm: "Are you sure you want to log out?" }, :class => "nav-link" %>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-<table>
-  <tr>
-    <td>
-      <%= link_to 'Dashboard', root_path %> |
-      <%= link_to 'Api\'s', apis_path %> |
-      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { confirm: "Are you sure you want to sign out?" }  %>
-    </td>
-  </tr>
-</table>
+<div class=" container ">
 
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Amount</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <div class=" row ">
+    <div class=" col ">
+      <h1>Investments</h1>
+    </div>
+  </div>
 
-  <tbody>
-    <% @transactions.each do |transaction| %>
-      <tr>
-        <td><%= transaction.date %></td>
-        <td><%= "$#{'%.2f' % transaction.amount}" %></td>
-        <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
-        <td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class=" row ">
+    <div class=" col ">
+      <table class=" table text-center ">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th width="25%"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @transactions.each do |transaction| %>
+            <tr>
+              <td><%= transaction.date %></td>
+              <td><%= "$#{'%.2f' % transaction.amount}" %></td>
+              <td>
+                <%= link_to 'Edit', edit_transaction_path(transaction) %>, 
+                <%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %>
+              </td>
+            </tr>
+          <% end %>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>
+              <%= link_to '+ New Transaction', new_transaction_path, :class => "btn btn-primary" %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
 
 <br>
 
-<%= link_to 'New Transaction', new_transaction_path %>

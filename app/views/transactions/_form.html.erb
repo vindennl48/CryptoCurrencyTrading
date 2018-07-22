@@ -1,27 +1,48 @@
-<%= form_with(model: transaction, local: true) do |form| %>
-  <% if transaction.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+<%= form_with model: @transaction, local: true do |form| %>
+  <div class=" row ">
+    <div class=" col ">
+      <% if @transaction.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
 
-      <ul>
-      <% transaction.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+          <% @transaction.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :date %>
-    <%= form.date_select :date %>
   </div>
 
-  <div class="field">
-    <%= form.label :amount %>
-    <%= form.text_field :amount %>
-  </div>
+  <div class=" row ">
+    <div class=" col ">
 
-  <div class="actions">
-    <%= form.submit %>
+      <table class=" table ">
+        <tr>
+          <th width="10%">
+            <%= form.label :date %>
+          </th>
+          <td>
+            <%= form.date_select :date %>
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <%= form.label :amount %>
+          </th>
+          <td>
+            <%= form.text_field :amount, :class => "form-control" %>
+          </td>
+        </tr>
+        <tr class=" text-right ">
+          <td></td>
+          <td>
+            <%= form.submit :Submit, :class => "btn btn-primary" %>
+            <%= link_to 'Cancel', transactions_path, :class => "btn btn-danger" %>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 <% end %>
