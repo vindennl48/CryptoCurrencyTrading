@@ -5,6 +5,20 @@ class Api < ApplicationRecord
   validates :api_type, presence: true
   validates :api_key, presence: true
   validates :secret_key, presence: true
+  validates :user_id, presence: true
+
+  def self.get_apis(current_user)
+    return Api.where(user_id: current_user.id)
+  end
+
+  def self.has_api(current_user)
+    apis = self.get_apis(current_user)
+    if apis.empty?
+      return false
+    else
+      return true
+    end
+  end
 
   def self.get_client(k)
     if k == "public"
@@ -38,12 +52,12 @@ class Api < ApplicationRecord
     return symbols
   end
 
-  def self.get_assets(symbols)
+  def self.get_assets(symbols, current_user)
 
     assets = {}
     total = 0.0
 
-    Api.all.each do |k|
+    self.get_apis(current_user).each do |k|
       if k["api_type"] == "binance_data"
         client = self.get_client(k)
         assets_raw = client.account_info["balances"]

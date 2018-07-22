@@ -7,10 +7,8 @@ class DashboardController < ApplicationController
 
   def index
     @symbols = Api.get_symbols
-    @assets = Api.get_assets(@symbols)
+    @assets = Api.get_assets(@symbols, current_user)
     @investment = Transaction.sum(:amount)
-
-    @debug = User.find(current_user.id).inspect
   end
 
   private
@@ -21,7 +19,7 @@ class DashboardController < ApplicationController
     end
 
     def has_api
-      if not Api.all
+      if not Api.has_api(current_user)
         redirect_to apis_path
       end
     end

@@ -3,7 +3,9 @@
 <table>
   <tr>
     <td>
-      <%= link_to 'Dashboard', root_path %>
+      <%= link_to 'Dashboard', root_path %> |
+      <%= link_to 'Investments', transactions_path %> |
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { confirm: "Are you sure you want to sign out?" }  %>
     </td>
   </tr>
 </table>
