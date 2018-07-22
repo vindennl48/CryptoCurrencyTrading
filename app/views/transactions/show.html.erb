@@ -7,7 +7,7 @@
 
 <p>
   <strong>Amount:</strong>
-  <%= @transaction.amount %>
+  <%= "$#{@transaction.amount}" %>
 </p>
 
 <%= link_to 'Edit', edit_transaction_path(@transaction) %> |

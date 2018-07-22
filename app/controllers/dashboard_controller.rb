@@ -6,5 +6,7 @@ class DashboardController < ApplicationController
     @symbols = Api.get_symbols
     @assets = Api.get_assets(@symbols)
     @investment = Transaction.sum(:amount)
+
+    @debug = "None"
   end
 end

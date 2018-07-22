@@ -3,6 +3,14 @@
 <h1>Transactions</h1>
 
 <table>
+  <tr>
+    <td>
+      <%= link_to 'Dashboard', root_path %>
+    </td>
+  </tr>
+</table>
+
+<table>
   <thead>
     <tr>
       <th>Date</th>
@@ -15,8 +23,7 @@
     <% @transactions.each do |transaction| %>
       <tr>
         <td><%= transaction.date %></td>
-        <td><%= transaction.amount %></td>
-        <td><%= link_to 'Show', transaction %></td>
+        <td><%= "$#{'%.2f' % transaction.amount}" %></td>
         <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
         <td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

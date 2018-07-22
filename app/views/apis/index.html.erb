@@ -1,9 +1,16 @@
 <h1>Listing API's</h1>
-<%= link_to 'New API', new_api_path %>
+
+<table>
+  <tr>
+    <td>
+      <%= link_to 'Dashboard', root_path %>
+    </td>
+  </tr>
+</table>
+
 <table>
   <tr>
     <th>Name</th>
-    <th>Api Type</th>
     <th>Api Key</th>
     <th>Secret Key</th>
   </tr>
@@ -11,8 +18,7 @@
   <% @apis.each do |api| %>
     <tr>
       <td><%= api.name %></td>
-      <td><%= api.api_type %></td>
-      <td><%= api.api_key %></td>
+      <td><%= api.api_key.truncate(20) %></td>
       <td>****</td>
       <td><%= link_to 'Show', api_path(api) %></td>
       <td><%= link_to 'Edit', edit_api_path(api) %></td>
@@ -21,4 +27,7 @@
               data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
+  <tr>
+    <td><%= link_to 'New API', new_api_path %></td>
+  </tr>
 </table>

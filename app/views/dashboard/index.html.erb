@@ -1,4 +1,18 @@
+<p>
+  <strong>Debug: </strong>
+  |<%= @debug %>|
+</p>
+
 <h1>Dasboard</h1>
+
+<table>
+  <tr>
+    <td>
+      <%= link_to 'Api\'s', apis_path %> |
+      <%= link_to 'Investments', transactions_path %>
+    </td>
+  </tr>
+</table>
 
 <table>
   <tr>
@@ -10,7 +24,14 @@
         </tr>
         <tr>
           <td><strong>Profit: </strong></td>
-          <td><%= "$#{'%.2f' % (@assets["total"]-@investment)}" %></td>
+          <td>
+            <% profit = @assets["total"]-@investment %>
+            <% if profit >= 0 %>
+              <%= "$#{'%.2f' % profit}" %>
+            <% else %>
+              <%= "-$#{'%.2f' % (profit*-1)}" %>
+            <% end %>
+          </td>
         </tr>
         <tr></tr>
       </table>
@@ -32,9 +53,9 @@
           <% if asset["usd"].to_f > 5.0  %>
             <tr>
               <td><%= symbol["baseAsset"] %></td>
-              <td><%= symbol["price"] %></td>
-              <td><%= asset["amount"] %></td>
-              <td><%= "$#{asset["usd"]}" %></td>
+              <td><%= "#{'%.8f' % symbol["price"]}" %></td>
+              <td><%= "#{'%.8f' % asset["amount"]}" %></td>
+              <td><%= "$#{'%.2f' % asset["usd"]}" %></td>
             </tr>
           <% end %>
         <% end %>
