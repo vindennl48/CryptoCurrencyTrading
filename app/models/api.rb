@@ -1,4 +1,5 @@
 require "coinbase/wallet"
+require "date"
 
 class Api < ApplicationRecord
   validates :name, presence: true
@@ -104,6 +105,21 @@ class Api < ApplicationRecord
 
     assets["total"] = total
     return assets
+  end
+
+  def self.get_klines(frame, baseAsset)
+    client = self.get_client("public")
+
+    candles_raw = client.klines symbol: "#{baseAsset}USDT", interval: frame
+
+    candles = []
+    candles_raw.each do |data|
+      date = data[0]
+      #date = DateTime.strptime(date, '%s').strftime('%Y-%m-%d')
+      candle = [ date, data[1], data[2], data[3], data[4] ]
+      candles.push(candle)
+    end
+    return candles
   end
 
 end

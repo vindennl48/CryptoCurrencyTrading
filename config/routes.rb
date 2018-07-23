@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   end
 
   get 'dashboard/index'
+  get 'dashboard/testme'
 
   resources :transactions
   resources :apis

@@ -11,6 +11,10 @@ class DashboardController < ApplicationController
     @investment = Transaction.sum(:amount)
   end
 
+  def testme
+    render :json => Api.get_klines(params[:frame], params[:baseAsset])
+  end
+
   private
     def auth_me
       if not current_user

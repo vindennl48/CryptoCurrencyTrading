@@ -91,26 +91,78 @@
 
   <div class=" row ">
     <div class=" col ">
-      <table class=" table ">
-        <tr>
-          <th class=" text-center ">Coin</th>
-          <th class=" text-center ">Ticker</th>
-          <th class=" text-center ">Assets</th>
-          <th class=" text-center ">Balance</th>
-        </tr>
-
-        <% @symbols.each do |key, symbol| %>
-          <% asset = @assets[symbol["baseAsset"]] %>
-          <% if asset["usd"].to_f > 5.0  %>
-            <tr>
-              <td class=" text-center "><%= symbol["baseAsset"] %></td>
-              <td class=" text-right "><%= "#{'%.8f' % symbol["price"]}" %></td>
-              <td class=" text-right "><%= "#{'%.8f' % asset["amount"]}" %></td>
-              <td class=" text-right "><%= "$#{'%.2f' % asset["usd"]}" %></td>
-            </tr>
+      <table class=" table table-hover ">
+        <thead>
+          <tr>
+            <th class=" text-center ">Coin</th>
+            <th class=" text-center ">Ticker</th>
+            <th class=" text-center ">Assets</th>
+            <th class=" text-center ">Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @symbols.each do |key, symbol| %>
+            <% asset = @assets[symbol["baseAsset"]] %>
+            <% if asset["usd"].to_f > 5.0  %>
+              <tr onclick="App.CandleChart('<%= symbol["baseAsset"] %>')">
+                <td class=" text-center "><%= symbol["baseAsset"] %></td>
+                <td class=" text-right "><%= "#{'%.8f' % symbol["price"]}" %></td>
+                <td class=" text-right "><%= "#{'%.8f' % asset["amount"]}" %></td>
+                <td class=" text-right "><%= "$#{'%.2f' % asset["usd"]}" %></td>
+              </tr>
+            <% end %>
           <% end %>
-        <% end %>
+        </tbody>
       </table>
     </div>
   </div>
+
+  <div id="chartContainerBody" class=" row " hidden>
+    <div class=" col ">
+
+      <div class=" row ">
+        <div class=" col ">
+          <div id="chartContainer" data-frame="1h"  data-baseAsset="BTC" data-scale="1" style=" height: 300px; width: 100%; "></div>
+        </div>
+      </div>
+
+      <div class=" row " id="chartContainerOptions">
+        <div class=" col ">
+          <table class=" table text-center ">
+            <tr>
+              <th>Frame</th>
+              <td>
+                <div class=" row ">
+                  <div class=" col ">
+                    <a href="javascript:void(App.SetCandleFrame('1h'))">1h</a>
+                  </div>
+                  <div class=" col ">
+                    <a href="javascript:void(App.SetCandleFrame('1d'))">1d</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Scale</th>
+              <td>
+                <div class=" row ">
+                  <div class=" col ">
+                    <a href="javascript:void(App.SetCandleScale('0.25'))">25%</a>
+                  </div>
+                  <div class=" col ">
+                    <a href="javascript:void(App.SetCandleScale('0.5'))">50%</a>
+                  </div>
+                  <div class=" col ">
+                    <a href="javascript:void(App.SetCandleScale('1'))">100%</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
