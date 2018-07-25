@@ -1,6 +1,11 @@
 # app/controller/application_controller.rb
 require 'google/apis/people_v1'
 require 'google/api_client/client_secrets.rb'
+
+Dir["lib/**/*.rb"].each do |path|
+  require_dependency path
+end
+
 class ApplicationController < ActionController::Base
   People = Google::Apis::PeopleV1
   def contacts
