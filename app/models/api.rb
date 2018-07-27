@@ -50,6 +50,8 @@ class Api < ApplicationRecord
       end
     end
 
+    symbols["USDT"] = {"baseAsset" => "USDT", "price" => "1"}
+
     return symbols
   end
 
@@ -63,9 +65,14 @@ class Api < ApplicationRecord
         client = self.get_client(k)
         assets_raw = client.account_info["balances"]
 
+        puts "assets_raw: |#{assets_raw}|"
+        puts "find: |#{assets_raw.find {|asset| asset["asset"] == "USDT"}}|"
+        puts "symbols key: |#{symbols["USDT"]}|"
+
         symbols.each do |key, value|
+          puts "value: |#{value["baseAsset"]}|"
           b = assets_raw.find {|asset| asset["asset"] == value["baseAsset"]}
-          if b
+          if not b.blank?
             usd = b["free"].to_f*value["price"].to_f
 
             if assets.key? b["asset"]
@@ -110,7 +117,11 @@ class Api < ApplicationRecord
   def self.get_klines(frame, baseAsset)
     client = self.get_client("public")
 
-    candles_raw = client.klines symbol: "#{baseAsset}USDT", interval: frame
+    if baseAsset == "USDT"
+      candles_raw = client.klines symbol: "TUSDUSDT", interval: frame
+    else
+      candles_raw = client.klines symbol: "#{baseAsset}USDT", interval: frame
+    end
 
     candles = []
     candles_raw.each do |data|
