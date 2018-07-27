@@ -58,11 +58,50 @@ let App = {
 
     $.ajax({
       type: "GET",
-      url: "/dashboard/testme",
+      url: "/dashboard/get_klines",
       data: {frame:frame, baseAsset:baseAsset},
       success: success,
       error: function(data){ alert("error: " + response) }
     })
-  } // END CandleChart
+  }, // END CandleChart
+
+  LoadDashboard: function(){
+
+    let success = function(data){
+      let a = document.getElementById('amount_invested')
+      a.innerHTML = data.amount_invested
+      let b = document.getElementById('current_total')
+      b.innerHTML = data.current_total
+      let c = document.getElementById('profit')
+      c.innerHTML = data.profit
+
+      let table = document.getElementById('invested_coins_table')
+      table.innerHTML = ""
+      for(var i=0; i<data.invested_coins.length; i++){
+        let ic = data.invested_coins[i]
+        table.innerHTML += `
+          <tr onclick="App.CandleChart('`+ic.baseAsset+`')">
+            <td class="text-center">`+ic.baseAsset+`</td>
+            <td class="text-right">`+ic.price+`</td>
+            <td class="text-right">`+ic.amount+`</td>
+            <td class="text-right">`+ic.usd+`</td>
+          </tr>
+        `;
+      }
+    }
+
+    let pollFunc = function(){
+      $.ajax({
+        type: "GET",
+        url: "/dashboard/get_data",
+        success: success,
+        error: function(data){ alert("error: " + data) }
+      })
+    }
+
+    pollFunc()
+    setInterval(pollFunc, 30000)
+  }
+
 }
 

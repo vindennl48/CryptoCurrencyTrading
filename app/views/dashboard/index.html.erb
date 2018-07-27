@@ -29,34 +29,25 @@
           <h2>Summary</h2>
         </div>
       </div>
+      <% clbl = " col-6 col-md-3 " %>
+      <% ctxt = " col-6 col-md-2 text-right " %>
       <div class=" row ">
-        <div class=" col-6 col-md-3 ">
+        <div class="<%= clbl %>">
           <strong>Amount Invested: </strong>
         </div>
-        <div class=" col-6 col-md-2 text-right ">
-          <%= "$#{'%.2f' % @investment}" %>
-        </div>
+        <div id="amount_invested" class="<%= ctxt %>">????</div>
       </div>
       <div class=" row ">
-        <div class=" col-6 col-md-3 ">
+        <div class="<%= clbl %>">
           <strong>Current Total: </strong>
         </div>
-        <div class=" col-6 col-md-2 text-right ">
-          <%= "$#{'%.2f' % @assets["total"]}" %>
-        </div>
+        <div id="current_total" class="<%= ctxt %>">????</div>
       </div>
       <div class=" row ">
-        <div class=" col-6 col-md-3 ">
+        <div class="<%= clbl %>">
           <strong>Profit: </strong>
         </div>
-        <div class=" col-6 col-md-2 text-right ">
-          <% profit = @assets["total"]-@investment %>
-          <% if profit >= 0 %>
-            <%= "$#{'%.2f' % profit}" %>
-          <% else %>
-            <%= "-$#{'%.2f' % (profit*-1)}" %>
-          <% end %>
-        </div>
+        <div id="profit" class="<%= ctxt %>">????</div>
       </div>
     </div>
   </div>
@@ -71,25 +62,17 @@
     <div class=" col ">
       <table class=" table table-hover ">
         <thead>
-          <tr>
-            <th class=" text-center ">Coin</th>
-            <th class=" text-center ">Ticker</th>
-            <th class=" text-center ">Assets</th>
-            <th class=" text-center ">Balance</th>
+          <tr class=" text-center ">
+            <th>Coin</th>
+            <th>Ticker</th>
+            <th>Assets</th>
+            <th>Balance</th>
           </tr>
         </thead>
-        <tbody>
-          <% @symbols.each do |key, symbol| %>
-            <% asset = @assets[symbol["baseAsset"]] %>
-            <% if asset["usd"].to_f > 5.0  %>
-              <tr onclick="App.CandleChart('<%= symbol["baseAsset"] %>')">
-                <td class=" text-center "><%= symbol["baseAsset"] %></td>
-                <td class=" text-right "><%= "#{'%.8f' % symbol["price"]}" %></td>
-                <td class=" text-right "><%= "#{'%.8f' % asset["amount"]}" %></td>
-                <td class=" text-right "><%= "$#{'%.2f' % asset["usd"]}" %></td>
-              </tr>
-            <% end %>
-          <% end %>
+        <tbody id="invested_coins_table">
+          <tr>
+            <td>Loading..</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -100,7 +83,7 @@
 
       <div class=" row ">
         <div class=" col ">
-          <div id="chartContainer" data-frame="1h"  data-baseAsset="BTC" data-scale="1" style=" height: 300px; width: 100%; "></div>
+          <div id="chartContainer" data-frame="1h" data-baseAsset="BTC" data-scale="1" style=" height: 300px; width: 100%; "></div>
         </div>
       </div>
 
@@ -144,3 +127,7 @@
   </div>
 
 </div>
+
+<script>
+  App.LoadDashboard()
+</script>
